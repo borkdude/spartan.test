@@ -17,7 +17,7 @@ library can be used meanwhile.
 Usage in a `deps.edn` project:
 
 ``` clojure
-{:deps {spartan.test {:git/url "https://github.com/borkdude/spartan.test" :sha "55d8ee0afabbd307da43ded8a9f17fffcaec9b19"}}
+{:deps {spartan.test {:mvn/version "0.0.1"}}
  :aliases {:test-namespaces {:main-opts ["-m" "spartan.test" "-n" "project.test"]}
            :test-vars {:main-opts ["-m" "spartan.test" "-v" "project.test/bar-test"]}}}
 ```
