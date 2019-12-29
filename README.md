@@ -39,6 +39,8 @@ $ cat src/project/test.clj
   (is (= 1 (project/foo))))
 ```
 
+Run with [deps.clj](https://github.com/borkdude/deps.clj/):
+
 ``` shell
 $ deps.clj -A:test-namespaces -Scommand "bb -cp {{classpath}} {{main-opts}}"
 FAIL in project.test/foo-test. Expected (= 2 (project/foo)) but got false.
