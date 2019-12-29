@@ -36,8 +36,8 @@
          (System/exit exit-code))
        string-out))))
 
-(def version-file (io/file "resources" "DEPS_CLJ_VERSION"))
-(def released-version-file (io/file "resources" "DEPS_CLJ_RELEASED_VERSION"))
+(def version-file (io/file "resources" "SPARTAN_TEST_VERSION"))
+(def released-version-file (io/file "resources" "SPARTAN_TEST_RELEASED_VERSION"))
 
 (case (first *command-line-args*)
   "release" (let [version-string (str/trim (slurp version-file))
