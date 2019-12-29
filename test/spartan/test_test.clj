@@ -1,11 +1,15 @@
 (ns spartan.test-test
-  (:require [spartan.test :refer [deftest is]]))
+  (:require [spartan.test :refer [deftest is]])
+  #_(:require [clojure.test :refer [deftest is]]))
 
-(deftest foo
+(deftest failure-test
   (is (= 1 2)))
 
-(deftest bar
-  (is (/ 1 0)))
-
-(deftest baz
+(deftest successful-test
   (is (= 1 1)))
+
+(deftest multiple-assertions-test
+  (is false)
+  (is nil))
+
+(deftest no-assertions-test)

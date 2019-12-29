@@ -2,20 +2,10 @@
   "A light test framework compatible with babashka."
   (:require [spartan.impl.test :as impl]))
 
-(defmacro is [& body]
-  `(try
-     (let [res# (do ~@body)]
-       (do (if res#
-             (swap! impl/report-counter update :success conj impl/*current-test*)
-             (do (binding [*out* *err*]
-                   (println (format "FAIL in %s. Expected %s but got %s." impl/*current-test* (str '~@body) res#))
-                   (swap! impl/report-counter update :fail conj impl/*current-test*))))
-           res#))
-     (catch java.lang.Exception e#
-       (binding [*out* *err*]
-         (println (format "ERROR in %s. Expected %s but got %s" impl/*current-test* (str '~@body) e#))
-         (swap! impl/report-counter update :error conj impl/*current-test*)
-         e#))))
+(defmacro is
+  ([form] `(is ~form nil))
+  ([form msg]
+   `(impl/try-expr ~msg ~form)))
 
 (defmacro deftest [symbol & body]
   `(let [sym# (symbol (str (ns-name *ns*))

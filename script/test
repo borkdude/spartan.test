@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-deps.clj -A:test -Scommand "bb -cp {{classpath}} script/test.clj"
+deps.clj -A:test -Scommand "bb --verbose -cp {{classpath}} script/test.clj"

@@ -1,22 +1,40 @@
 #!/usr/bin/env bb
 
 (require '[clojure.java.shell :as shell]
+         '[clojure.string :as str]
          '[spartan.test :as test :refer [deftest is -main]])
 
 (defn run-namespaces []
-  (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -n spartan.test-test"))
+  (-> (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -n spartan.test-test")
+      :err
+      (str/trim)))
 
-(def expected-run-namespaces
-  {:exit 2, :out "", :err "FAIL in spartan.test-test/foo. Expected (= 1 2) but got false.\nERROR in spartan.test-test/bar. Expected (/ 1 0) but got java.lang.ArithmeticException: Divide by zero\nRan 3 tests in total, 1 tests failed, 1 tests gave errors, 1 succeeded.\n"})
+(def expected-run-namespaces (str/trim "FAIL in spartan.test-test/failure-test
+expected: (= 1 2)
+actual: (not (= 1 2))
+
+FAIL in spartan.test-test/multiple-assertions-test
+expected: false
+actual: false
+
+FAIL in spartan.test-test/multiple-assertions-test
+expected: nil
+actual: nil
+
+WARNING: no assertions were made in test spartan.test-test/no-assertions-test
+
+Ran 4 tests containing 4 assertions.
+3 failures, 0 errors."))
 
 (defn run-vars []
-  (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -v spartan.test-test/baz"))
+  (:err (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -v spartan.error-test/error-test")))
 
-(def expected-run-vars
-  {:exit 0, :err "Ran 1 tests in total, 1 succeeded.\n", :out ""})
+;; show normal output:
+#_(println (run-namespaces))
+#_(println (run-vars))
 
 (deftest spartan-test
   (is (= expected-run-namespaces (run-namespaces)))
-  (is (= expected-run-vars (run-vars))))
+  (is (str/includes? (run-vars) "1 errors")))
 
 (-main)
