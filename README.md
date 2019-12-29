@@ -49,3 +49,9 @@ Ran 3 tests in total, 1 tests failed, 2 succeeded.
 $ deps.clj -A:test-vars -Scommand "bb -cp {{classpath}} {{main-opts}}"
 Ran 1 tests in total, 1 succeeded.
 ```
+
+## License
+
+Copyright © 2019 Michiel Borkent
+
+Distributed under the EPL License. See LICENSE.
