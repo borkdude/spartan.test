@@ -30,7 +30,6 @@
     (doseq [v tests]
       (require (symbol (namespace v))))
     (let [{:keys [:error :fail]} (impl/run-tests tests)]
-      (prn "EXIT CODE" (+ error fail))
       (System/exit (+ error fail)))))
 
 ;;;; Scratch
