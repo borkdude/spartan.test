@@ -13,7 +13,7 @@ library can be used meanwhile.
 Usage in a `deps.edn` project:
 
 ``` clojure
-{:deps {spartan.test {:git/url "https://github.com/borkdude/spartan.test" :sha "610b4b9664caacb4402caff838d8724c73e21d4d"}}
+{:deps {spartan.test {:git/url "https://github.com/borkdude/spartan.test" :sha "55d8ee0afabbd307da43ded8a9f17fffcaec9b19"}}
  :aliases {:test-namespaces {:main-opts ["-m" "spartan.test" "-n" "project.test"]}
            :test-vars {:main-opts ["-m" "spartan.test" "-v" "project.test/bar-test"]}}}
 ```
