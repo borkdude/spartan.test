@@ -15,11 +15,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
+          keys:
           - v1-dependencies-{{ checksum "project.clj" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-       - run:
+      - run:
           name: Install babashka
           command: |
             bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install)
@@ -32,6 +32,10 @@ jobs:
           name: Run tests
           command: |
             ./deps.clj -A:test -Scommand "bb -cp {{classpath}} script/test.clj"
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "project.clj" }}
   deploy:
     docker:
       - image: circleci/clojure:lein-2.8.1
@@ -61,3 +65,11 @@ workflows:
               only: master
           requires:
             - test
+      # - docker:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - jvm
+      #       - linux
+      #       - mac
