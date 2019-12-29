@@ -1,0 +1,63 @@
+# Clojure CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-clojure/ for more details
+#
+version: 2.1
+jobs:
+  test:
+    docker:
+      # specify the version you desire here
+      - image: circleci/clojure:lein-2.8.1
+    working_directory: ~/repo
+    environment:
+      LEIN_ROOT: "true"
+      # GRAALVM_HOME: /home/circleci/graalvm-ce-java8-19.3.0
+    steps:
+      - checkout
+      - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+       - run:
+          name: Install babashka
+          command: |
+            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install)
+      - run:
+          name: Install deps.clj
+          command: |
+            curl -sL https://raw.githubusercontent.com/borkdude/deps.clj/master/deps.clj -o /tmp/deps.clj
+            chmod +x /tmp/deps.clj
+      - run:
+          name: Run tests
+          command: |
+            ./deps.clj -A:test -Scommand "bb -cp {{classpath}} script/test.clj"
+  deploy:
+    docker:
+      - image: circleci/clojure:lein-2.8.1
+    working_directory: ~/repo
+    environment:
+      LEIN_ROOT: "true"
+    steps:
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "project.clj" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: .circleci/script/deploy
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "project.clj" }}
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - test
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
