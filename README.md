@@ -1,5 +1,9 @@
 # spartan.test
 
+[![CircleCI](https://circleci.com/gh/borkdude/spartan.test/tree/master.svg?style=shield)](https://circleci.com/gh/borkdude/spartan.test/tree/master)
+[![Clojars Project](https://img.shields.io/clojars/v/borkdude/spartan.test.svg)](https://clojars.org/borkdude/spartan.test)
+[![project chat](https://img.shields.io/badge/slack-join_chat-brightgreen.svg)](https://app.slack.com/client/T03RZGPFR/CLX41ASCS)
+
 A spartan test framework compatible with
 [babashka](https://github.com/borkdude/babashka) (>= 0.0.53) and Clojure.
 
