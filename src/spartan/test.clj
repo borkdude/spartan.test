@@ -6,20 +6,21 @@
   `(try
      (let [res# (do ~@body)]
        (if res#
-         (swap! impl/report-counter update :success inc)
+         (swap! impl/report-counter update :success conj impl/*current-test*)
          (do (binding [*out* *err*]
-               (println (format "FAIL in %s. Expected %s but got %s." impl/*current-test* '~@body res#))
-               (swap! impl/report-counter update :fail inc)))))
+               (println (format "FAIL in %s. Expected %s but got %s." impl/*current-test* (str '~@body) res#))
+               (swap! impl/report-counter update :fail conj impl/*current-test*)))))
      (catch java.lang.Exception e#
        (binding [*out* *err*]
-         (println (format "ERROR in %s. Expected %s but got %s" impl/*current-test* '~body e#))
-         (swap! impl/report-counter update :error inc)))))
+         (println (format "ERROR in %s. Expected %s but got %s" impl/*current-test* (str '~@body) e#))
+         (swap! impl/report-counter update :error conj impl/*current-test*)))))
 
 (defmacro deftest [symbol & body]
   `(let [sym# (symbol (str (ns-name *ns*))
                       (str '~symbol))]
-     (defn ~symbol [] (binding [impl/*current-test* sym#]
-                        ~@body))
+     (defn ~symbol []
+       (binding [impl/*current-test* sym#]
+         ~@body))
        (swap! impl/registered-tests conj sym#)))
 
 (defn -main [& args]
@@ -29,7 +30,6 @@
     (doseq [v tests]
       (require (symbol (namespace v))))
     (let [{:keys [:error :fail]} (impl/run-tests tests)]
-      (System/exit (+ error fail)))
-    (println "Expected: initial namespace to load.")))
+      (System/exit (+ error fail)))))
 
 ;;;; Scratch
