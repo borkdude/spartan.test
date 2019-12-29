@@ -40,7 +40,7 @@ $ cat src/project/test.clj
 ```
 
 ``` shell
-$ deps.clj -A:test-vars -Scommand "bb -cp {{classpath}} {{main-opts}}"
+$ deps.clj -A:test-namespaces -Scommand "bb -cp {{classpath}} {{main-opts}}"
 FAIL in project.test/foo-test. Expected (= 2 (project/foo)) but got false.
 Ran 3 tests in total, 1 tests failed, 2 succeeded.
 
