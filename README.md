@@ -3,6 +3,11 @@
 A spartan test framework compatible with
 [babashka](https://github.com/borkdude/babashka) (>= 0.0.53) and Clojure.
 
+## Rationale
+
+Currently babashka doesn't have an implementation of `clojure.test`. This
+library can be used meanwhile.
+
 ## Usage:
 
 Usage in a `deps.edn` project:
