@@ -1,6 +1,7 @@
 # spartan.test
 
 A spartan test framework compatible with [babashka](https://github.com/borkdude/babashka).
+Requires babashka version 0.0.53 or newer.
 
 ## Usage:
 
