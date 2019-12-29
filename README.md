@@ -47,11 +47,16 @@ Run with [deps.clj](https://github.com/borkdude/deps.clj/):
 
 ``` shell
 $ deps.clj -A:test-namespaces -Scommand "bb -cp {{classpath}} {{main-opts}}"
-FAIL in project.test/foo-test. Expected (= 2 (project/foo)) but got false.
-Ran 3 tests in total, 1 tests failed, 2 succeeded.
+FAIL in project.test/foo-test
+expected: (= 2 (project/foo))
+actual: (not (= 2 1))
+
+Ran 2 tests containing 3 assertions.
+1 failures, 0 errors.
 
 $ deps.clj -A:test-vars -Scommand "bb -cp {{classpath}} {{main-opts}}"
-Ran 1 tests in total, 1 succeeded.
+Ran 1 tests containing 1 assertions.
+0 failures, 0 errors.
 ```
 
 ## Tests
