@@ -54,6 +54,11 @@ $ deps.clj -A:test-vars -Scommand "bb -cp {{classpath}} {{main-opts}}"
 Ran 1 tests in total, 1 succeeded.
 ```
 
+## Tests
+
+Install [babashka](https://github.com/borkdude/babashka) and [deps.clj](https://github.com/borkdude/deps.clj/).
+Then run `script/test`.
+
 ## License
 
 Copyright © 2019 Michiel Borkent

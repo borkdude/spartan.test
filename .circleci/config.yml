@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            deps.clj -A:test -Scommand "bb -cp {{classpath}} script/test.clj"
+            script/test
       - save_cache:
           paths:
             - ~/.m2

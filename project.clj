@@ -1,4 +1,6 @@
-(defproject borkdude/spartan.test "0.0.1"
+(defproject borkdude/spartan.test
+  #=(clojure.string/trim
+     #=(slurp "resources/SPARTAN_TEST_VERSION"))
   :description "A spartan test framework compatible with babashka."
   :url "https://github.com/borkdude/spartan.test"
   :scm {:name "git"
