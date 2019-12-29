@@ -5,15 +5,17 @@
 (defmacro is [& body]
   `(try
      (let [res# (do ~@body)]
-       (if res#
-         (swap! impl/report-counter update :success conj impl/*current-test*)
-         (do (binding [*out* *err*]
-               (println (format "FAIL in %s. Expected %s but got %s." impl/*current-test* (str '~@body) res#))
-               (swap! impl/report-counter update :fail conj impl/*current-test*)))))
+       (do (if res#
+             (swap! impl/report-counter update :success conj impl/*current-test*)
+             (do (binding [*out* *err*]
+                   (println (format "FAIL in %s. Expected %s but got %s." impl/*current-test* (str '~@body) res#))
+                   (swap! impl/report-counter update :fail conj impl/*current-test*))))
+           res#))
      (catch java.lang.Exception e#
        (binding [*out* *err*]
          (println (format "ERROR in %s. Expected %s but got %s" impl/*current-test* (str '~@body) e#))
-         (swap! impl/report-counter update :error conj impl/*current-test*)))))
+         (swap! impl/report-counter update :error conj impl/*current-test*)
+         e#))))
 
 (defmacro deftest [symbol & body]
   `(let [sym# (symbol (str (ns-name *ns*))
@@ -21,7 +23,8 @@
      (defn ~symbol []
        (binding [impl/*current-test* sym#]
          ~@body))
-       (swap! impl/registered-tests conj sym#)))
+     (do (swap! impl/registered-tests conj sym#)
+         (var ~symbol))))
 
 (defn -main [& args]
   (let [{:keys [:namespaces :tests] :as _parsed} (impl/parse-args args)]
