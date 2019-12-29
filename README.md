@@ -1,7 +1,7 @@
 # spartan.test
 
-A spartan test framework compatible with [babashka](https://github.com/borkdude/babashka).
-Requires babashka version 0.0.53 or newer.
+A spartan test framework compatible with
+[babashka](https://github.com/borkdude/babashka) (>= 0.0.53) and Clojure.
 
 ## Usage:
 
@@ -14,11 +14,13 @@ Usage in a `deps.edn` project:
 ```
 
 ``` clojure
+$ cat src/project/core.clj
 (ns project.core)
 
 (defn foo []
   1)
 
+$ cat src/project/test.clj
 (ns project.test
   (:require
    [project.core :as project]
