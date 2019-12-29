@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Install babashka
           command: |
-            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install)
+            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install) ~
       - run:
           name: Install deps.clj
           command: |
@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            ./deps.clj -A:test -Scommand "bb -cp {{classpath}} script/test.clj"
+            ./deps.clj -A:test -Scommand "$HOME/bb -cp {{classpath}} script/test.clj"
       - save_cache:
           paths:
             - ~/.m2
