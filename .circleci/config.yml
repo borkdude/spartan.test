@@ -22,17 +22,16 @@ jobs:
       - run:
           name: Install babashka
           command: |
-            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install) ~
+            sudo bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install)
       - run:
           name: Install deps.clj
           command: |
-            curl -sL https://raw.githubusercontent.com/borkdude/deps.clj/master/deps.clj -o ~/deps.clj
-            chmod +x ~/deps.clj
+            sudo curl -sL https://raw.githubusercontent.com/borkdude/deps.clj/master/deps.clj -o /usr/local/bin/deps.clj
+            chmod +x /usr/local/bin/deps.clj
       - run:
           name: Run tests
           command: |
-            ~/bb ~/deps.clj -A:test -Scommand "$HOME/bb -cp {{classpath}} script/test.clj"
-            echo "return" $?
+            deps.clj -A:test -Scommand "bb -cp {{classpath}} script/test.clj"
       - save_cache:
           paths:
             - ~/.m2
