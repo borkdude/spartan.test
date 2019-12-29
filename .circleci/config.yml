@@ -22,13 +22,13 @@ jobs:
       - run:
           name: Install babashka
           command: |
-            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install) /tmp
-            sudo mv /tmp/bb /usr/local/bin/bb
+            bash <(curl -s https://raw.githubusercontent.com/borkdude/babashka/master/install) ~
+            sudo mv ~/bb /usr/local/bin/bb
       - run:
           name: Install deps.clj
           command: |
             sudo curl -sL https://raw.githubusercontent.com/borkdude/deps.clj/master/deps.clj -o /usr/local/bin/deps.clj
-            chmod +x /usr/local/bin/deps.clj
+            sudo chmod +x /usr/local/bin/deps.clj
       - run:
           name: Run tests
           command: |
