@@ -10,10 +10,10 @@
   (swap! report-counter update :tests inc))
 (defn reg-result [k]
   (let [res (swap! report-counter
-                  (fn [counter]
-                    (-> counter
-                        (update k inc)
-                        (update :assertions inc))))]
+                   (fn [counter]
+                     (-> counter
+                         (update k inc)
+                         (update :assertions inc))))]
     res))
 (def registered-tests (atom []))
 
@@ -47,7 +47,7 @@
            (println "FAIL in" *current-test*)
            (when (seq *testing-contexts*) (println (testing-contexts-str)))
            (println "expected:" '~form)
-           (println "actual:" (list '~'not (cons '~pred values#)))
+           (println "  actual:" (list '~'not (cons '~pred values#)))
            (println)
            (reg-result :fail)))
        result#)))
@@ -61,7 +61,7 @@
          (println "FAIL in" *current-test*)
          (when (seq *testing-contexts*) (println (testing-contexts-str)))
          (println "expected:" '~form)
-         (println "actual:" result#)
+         (println "  actual:" result#)
          (println)
          (reg-result :fail)))
      result#))
@@ -74,30 +74,32 @@
          (println "FAIL in" *current-test*)
          (when (seq *testing-contexts*) (println (testing-contexts-str)))
          (println "expected:" '~complete-form)
-         (println "actual:" result#)
+         (println "  actual:" result#)
          (println)
          (reg-result :fail)))
      result#))
 
 (defn assert-expr [msg form]
-  (cond (and (sequential? form) (function? (first form)))
-        (assert-predicate msg form)
-        (= 'thrown? (first form))
-        (assert-thrown msg form)
-        :else
-        (assert-any msg form)))
+  (if (sequential? form)
+    (cond (function? (first form))
+          (assert-predicate msg form)
+          (= 'thrown? (first form))
+          (assert-thrown msg form)
+          :else
+          (assert-any msg form))
+    (assert-any msg form)))
 
 (defmacro try-expr [msg form]
   `(try ~(assert-expr msg form)
-     (catch Exception t# ;; TODO: should be Throwable, but not in bb yet
-       (binding [*out* *err*]
-         (println "ERROR in" *current-test*)
-         (when (seq *testing-contexts*) (println (testing-contexts-str)))
-         (println "expected:" '~form)
-         (println "actual:" t#)
-         (println)
-         (reg-result :error)
-         t#))))
+        (catch Exception t# ;; TODO: should be Throwable, but not in bb yet
+          (binding [*out* *err*]
+            (println "ERROR in" *current-test*)
+            (when (seq *testing-contexts*) (println (testing-contexts-str)))
+            (println "expected:" '~form)
+            (println "  actual:" t#)
+            (println)
+            (reg-result :error)
+            t#))))
 
 (defn print-summary [{:keys [:error :fail :assertions :tests]}]
   (binding [*out* *err*]
