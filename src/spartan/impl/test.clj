@@ -5,6 +5,7 @@
 (def init-counter {:fail 0 :error 0 :success 0 :tests 0 :assertions 0})
 (def report-counter (atom init-counter))
 (def ^:dynamic *current-test* nil)
+(def ^:dynamic *testing-contexts* (list))
 (defn reg-test []
   (swap! report-counter update :tests inc))
 (defn reg-result [k]
@@ -15,6 +16,14 @@
                         (update :assertions inc))))]
     res))
 (def registered-tests (atom []))
+
+;; 307
+(defn testing-contexts-str
+  "Returns a string representation of the current test context. Joins
+  strings in *testing-contexts* with spaces."
+  []
+  (apply str (interpose " " (reverse *testing-contexts*))))
+
 
 (defn function?
   [x]
@@ -36,6 +45,7 @@
          (reg-result :success)
          (binding [*out* *err*]
            (println "FAIL in" *current-test*)
+           (when (seq *testing-contexts*) (println (testing-contexts-str)))
            (println "expected:" '~form)
            (println "actual:" (list '~'not (cons '~pred values#)))
            (println)
@@ -49,6 +59,7 @@
        (reg-result :success)
        (binding [*out* *err*]
          (println "FAIL in" *current-test*)
+         (when (seq *testing-contexts*) (println (testing-contexts-str)))
          (println "expected:" '~form)
          (println "actual:" result#)
          (println)
@@ -66,6 +77,7 @@
      (catch Exception t# ;; TODO: should be Throwable, but not in bb yet
        (binding [*out* *err*]
          (println "ERROR in" *current-test*)
+         (when (seq *testing-contexts*) (println (testing-contexts-str)))
          (println "expected:" '~form)
          (println "actual:" t#)
          (println)

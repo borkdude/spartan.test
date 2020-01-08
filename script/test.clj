@@ -23,8 +23,13 @@ actual: nil
 
 WARNING: no assertions were made in test spartan.test-test/no-assertions-test
 
-Ran 4 tests containing 4 assertions.
-3 failures, 0 errors."))
+FAIL in spartan.test-test/with-testing
+something's wrong another testing
+expected: false
+actual: false
+
+Ran 5 tests containing 5 assertions.
+4 failures, 0 errors."))
 
 (defn run-vars []
   (:err (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -v spartan.error-test/error-test")))
