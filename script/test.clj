@@ -11,25 +11,29 @@
 
 (def expected-run-namespaces (str/trim "FAIL in spartan.test-test/failure-test
 expected: (= 1 2)
-actual: (not (= 1 2))
+  actual: (not (= 1 2))
 
 FAIL in spartan.test-test/multiple-assertions-test
 expected: false
-actual: false
+  actual: false
 
 FAIL in spartan.test-test/multiple-assertions-test
 expected: nil
-actual: nil
+  actual: nil
 
 WARNING: no assertions were made in test spartan.test-test/no-assertions-test
 
 FAIL in spartan.test-test/with-testing
 something's wrong another testing
 expected: false
-actual: false
+  actual: false
 
-Ran 5 tests containing 5 assertions.
-4 failures, 0 errors."))
+FAIL in spartan.test-test/thrown?-test
+expected: (thrown? Exception (/ 1 1))
+  actual: 1
+
+Ran 6 tests containing 7 assertions.
+5 failures, 0 errors."))
 
 (defn run-vars []
   (:err (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -v spartan.error-test/error-test")))

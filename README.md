@@ -12,6 +12,11 @@ A spartan test framework compatible with
 Currently babashka doesn't have an implementation of `clojure.test`. This
 library can be used meanwhile.
 
+## Differences with clojure.test
+
+Currently this library only supports `deftest`, `is`, `testing` and `thrown?`.
+Tests can only be defined through `deftest`, not via metadata on vars.
+
 ## Usage:
 
 Usage in a `deps.edn` project:
@@ -49,7 +54,7 @@ Run with [deps.clj](https://github.com/borkdude/deps.clj/):
 $ deps.clj -A:test-namespaces -Scommand "bb -cp {{classpath}} {{main-opts}}"
 FAIL in project.test/foo-test
 expected: (= 2 (project/foo))
-actual: (not (= 2 1))
+  actual: (not (= 2 1))
 
 Ran 2 tests containing 3 assertions.
 1 failures, 0 errors.

@@ -18,3 +18,7 @@
   (testing "something's wrong"
     (testing "another testing"
       (is false))))
+
+(deftest thrown?-test
+  (is (thrown? Exception (/ 1 1)))
+  (is (thrown? Exception (/ 1 0))))
