@@ -1,3 +1,4 @@
 /.cpcache
 /pom.xml
 /target
+.clj-kondo/.cache

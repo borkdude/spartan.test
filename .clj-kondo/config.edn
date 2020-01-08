@@ -1,0 +1,2 @@
+{:lint-as {spartan.test/deftest clojure.test/deftest}
+ :linters {:unresolved-symbol [(spartan.test/is [thrown? thrown-with-msg?])]}}
