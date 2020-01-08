@@ -20,5 +20,9 @@
       (is false))))
 
 (deftest thrown?-test
-  (is (thrown? Exception (/ 1 1)))
-  (is (thrown? Exception (/ 1 0))))
+  (is (thrown? Exception (/ 1 0)))
+  (is (thrown? Exception (/ 1 1))))
+
+(deftest thrown-with-msg?-test
+  (is (thrown-with-msg? Exception #"zero" (/ 1 0)))
+  (is (thrown-with-msg? Exception #"zero" (/ 1 1))))

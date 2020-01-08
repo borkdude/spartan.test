@@ -14,8 +14,9 @@ library can be used meanwhile.
 
 ## Differences with clojure.test
 
-Currently this library only supports `deftest`, `is`, `testing` and `thrown?`.
-Tests can only be defined through `deftest`, not via metadata on vars.
+Currently this library only supports `deftest`, `is`, `testing`, `thrown?` and
+`thrown-with-msg?`.  Tests can only be defined through `deftest`, not via
+metadata on vars.
 
 ## Usage:
 

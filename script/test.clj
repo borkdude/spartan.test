@@ -9,7 +9,8 @@
       :err
       (str/trim)))
 
-(def expected-run-namespaces (str/trim "FAIL in spartan.test-test/failure-test
+(def expected-run-namespaces (str/trim "
+FAIL in spartan.test-test/failure-test
 expected: (= 1 2)
   actual: (not (= 1 2))
 
@@ -32,8 +33,12 @@ FAIL in spartan.test-test/thrown?-test
 expected: (thrown? Exception (/ 1 1))
   actual: 1
 
-Ran 6 tests containing 7 assertions.
-5 failures, 0 errors."))
+FAIL in spartan.test-test/thrown-with-msg?-test
+expected: (thrown-with-msg? Exception #\"zero\" (/ 1 1))
+  actual: 1
+
+Ran 7 tests containing 9 assertions.
+6 failures, 0 errors."))
 
 (defn run-vars []
   (:err (shell/sh "deps.clj" "-A:test" "-Scommand" "bb -cp {{classpath}} -m spartan.test -v spartan.error-test/error-test")))
