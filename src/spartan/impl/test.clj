@@ -66,9 +66,24 @@
          (reg-result :fail)))
      result#))
 
+(defn assert-thrown [msg [_thrown? ex form :as complete-form]]
+  `(let [result# (try ~form (catch ~ex e# e#))]
+     (if (instance? (resolve '~ex) result#)
+       (reg-result :success)
+       (binding [*out* *err*]
+         (println "FAIL in" *current-test*)
+         (when (seq *testing-contexts*) (println (testing-contexts-str)))
+         (println "expected:" '~complete-form)
+         (println "actual:" result#)
+         (println)
+         (reg-result :fail)))
+     result#))
+
 (defn assert-expr [msg form]
   (cond (and (sequential? form) (function? (first form)))
         (assert-predicate msg form)
+        (= 'thrown? (first form))
+        (assert-thrown msg form)
         :else
         (assert-any msg form)))
 
