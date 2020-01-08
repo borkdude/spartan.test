@@ -152,6 +152,15 @@
      (print-summary res)
      res)))
 
+(defn test-ns
+  [ns]
+  (let [nsn (if (symbol? ns) ns
+                (ns-name ns))
+        nsn-str (str nsn)]
+    (require nsn)
+    (let [tests (filter #(= nsn-str (namespace %)) @registered-tests)]
+      (run-tests tests))))
+
 (defn parse-args [args]
   (loop [ret {}
          args (seq args)]
