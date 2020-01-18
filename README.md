@@ -5,7 +5,7 @@
 [![project chat](https://img.shields.io/badge/slack-join_chat-brightgreen.svg)](https://app.slack.com/client/T03RZGPFR/CLX41ASCS)
 
 A spartan test framework compatible with
-[babashka](https://github.com/borkdude/babashka) (>= 0.0.53) and Clojure.
+[babashka](https://github.com/borkdude/babashka) (>= 0.0.65) and Clojure.
 
 ## Rationale
 
@@ -14,9 +14,9 @@ library can be used meanwhile.
 
 ## Differences with clojure.test
 
-Currently this library only supports `deftest`, `is`, `testing`, `thrown?` and
-`thrown-with-msg?`.  Tests can only be defined through `deftest`, not via
-metadata on vars.
+Currently this library only supports `deftest`, `is`, `testing`, `thrown?`,
+`thrown-with-msg?` and `run-tests`.  Tests can only be defined through
+`deftest`, not via metadata on vars.
 
 ## Usage:
 

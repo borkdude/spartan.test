@@ -1,6 +1,5 @@
 (ns spartan.impl.test
-  {:no-doc true}
-  (:require [clojure.string :as str]))
+  {:no-doc true})
 
 (def init-counter {:fail 0 :error 0 :success 0 :tests 0 :assertions 0})
 (def report-counter (atom init-counter))
@@ -151,6 +150,15 @@
    (let [res @report-counter]
      (print-summary res)
      res)))
+
+(defn test-ns
+  [ns]
+  (let [nsn (if (symbol? ns) ns
+                (ns-name ns))
+        nsn-str (str nsn)]
+    (require nsn)
+    (let [tests (filter #(= nsn-str (namespace %)) @registered-tests)]
+      (run-tests tests))))
 
 (defn parse-args [args]
   (loop [ret {}
