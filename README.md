@@ -23,7 +23,7 @@ Currently this library only supports `deftest`, `is`, `testing`, `thrown?`,
 Usage in a `deps.edn` project:
 
 ``` clojure
-{:deps {borkdude/spartan.test {:mvn/version "0.0.4"}}
+{:deps {borkdude/spartan.test {:mvn/version "0.0.5"}}
  :aliases {:test-namespaces {:main-opts ["-m" "spartan.test" "-n" "project.test"]}
            :test-vars {:main-opts ["-m" "spartan.test" "-v" "project.test/bar-test"]}}}
 ```
