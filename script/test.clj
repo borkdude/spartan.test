@@ -2,7 +2,7 @@
 
 (require '[clojure.java.shell :as shell]
          '[clojure.string :as str]
-         '[spartan.test :as test :refer [deftest is -main]])
+         '[spartan.test :as t :refer [deftest is -main]])
 
 (def expected-run-namespaces (str/trim "
 FAIL in spartan.test-test/failure-test
@@ -54,6 +54,18 @@ expected: (= 1 2)
   actual: (not (= 1 2))
 
 Ran 1 tests containing 1 assertions.
+1 failures, 0 errors.
+FAIL in bar/bar-test
+expected: (= 1 2)
+  actual: (not (= 1 2))
+
+Ran 1 tests containing 1 assertions.
+1 failures, 0 errors.
+FAIL in foo/foo-test
+expected: (= 1 2)
+  actual: (not (= 1 2))
+
+Ran 1 tests containing 1 assertions.
 1 failures, 0 errors."))
 
 (defn run-tests-test []
@@ -64,7 +76,7 @@ Ran 1 tests containing 1 assertions.
 ;; show normal output:
 #_(println (run-namespaces))
 #_(println (run-vars))
-#_(prn (run-tests-test))
+#_(println (run-tests-test))
 
 (deftest spartan-test
   (is (= expected-run-namespaces (run-namespaces)))

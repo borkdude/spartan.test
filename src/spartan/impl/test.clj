@@ -1,6 +1,5 @@
 (ns spartan.impl.test
-  {:no-doc true}
-  (:require [clojure.string :as str]))
+  {:no-doc true})
 
 (def init-counter {:fail 0 :error 0 :success 0 :tests 0 :assertions 0})
 (def report-counter (atom init-counter))
