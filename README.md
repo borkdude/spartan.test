@@ -9,8 +9,10 @@ A spartan test framework compatible with
 
 ## Rationale
 
-Currently babashka doesn't have an implementation of `clojure.test`. This
-library can be used meanwhile.
+~~Currently babashka doesn't have an implementation of `clojure.test`. This
+library can be used meanwhile.~~
+
+NOTE: babashka (>= 0.0.67) now has `clojure.test` as a built-in namespace, which deprecates this library.
 
 ## Differences with clojure.test
 
